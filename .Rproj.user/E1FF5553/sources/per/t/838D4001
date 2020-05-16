@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1589585968515.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "884282647",
+    "id" : "838D4001",
+    "lastKnownWriteTime" : 1589598040,
+    "last_content_update" : 1589598040021,
+    "path" : "~/Stevens/en-250/en250Final/profileMethods.R",
+    "project_path" : "profileMethods.R",
+    "properties" : {
+        "cursorPosition" : "52,0",
+        "scrollLine" : "17"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

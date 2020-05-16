@@ -1,0 +1,40 @@
+###############################
+# Classical regression models #
+###############################
+train <- rbind(pres_train, backg_train)
+pb_train <- c(rep(1, nrow(pres_train)), rep(0, nrow(backg_train)))
+envtrain <- extract(predictors, train)
+envtrain <- data.frame( cbind(pa=pb_train, envtrain) )
+envtrain[,'biome'] = factor(envtrain[,'biome'], levels=1:14)
+head(envtrain)
+testpres <- data.frame( extract(predictors, pres_test) )
+testbackg <- data.frame( extract(predictors, backg_test) )
+testpres[ ,'biome'] = factor(testpres[ ,'biome'], levels=1:14)
+testbackg[ ,'biome'] = factor(testbackg[ ,'biome'], levels=1:14)
+
+#############################
+# Generalized Linear Models #
+#############################
+gm1 <- glm(pa ~ bio1 + bio5 + bio6 + bio7 + bio8 + bio12 + bio16 + bio17,
+           family = binomial(link = "logit"), data=envtrain)
+summary(gm1)
+
+coef(gm1)
+
+gm2 <- glm(pa ~ bio1+bio5 + bio6 + bio7 + bio8 + bio12 + bio16 + bio17,
+           family = gaussian(link = "identity"), data=envtrain)
+evaluate(testpres, testbackg, gm1)
+
+ge2 <- evaluate(testpres, testbackg, gm2)
+ge2
+
+pg <- predict(predictors, gm2, ext=ext)
+par(mfrow=c(1,2))
+plot(pg, main='GLM/gaussian, raw values')
+plot(wrld_simpl, add=TRUE, border='dark grey')
+tr <- threshold(ge2, 'spec_sens')
+plot(pg > tr, main='presence/absence')
+plot(wrld_simpl, add=TRUE, border='dark grey')
+points(pres_train, pch='+')
+points(backg_train, pch='-', cex=0.25)
+
